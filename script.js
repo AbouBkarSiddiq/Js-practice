@@ -37,8 +37,8 @@ const data = [
     { name: 'marinda', id: 5, price: 44, featured: false, discount: 0 }
 ]
 
-const deleteItem = (id) => data.filter(ele => ele.id !== id);
-let result = deleteItem(4)
+// const deleteItem = (id) => data.filter(ele => ele.id !== id);
+// let result = deleteItem(4)
 
 // function updateArray(obj, id) {
 //     console.log(obj)
@@ -48,18 +48,26 @@ let result = deleteItem(4)
 // updateArray({ name: 'sprite', price: 50 }, 2)
 // console.log(updateArray)
 
-let updateArrayFunc = (obj, id) => {
-    
-    let objectPassedById
-    objectPassedById = data.find(ele => ele.id === id)
-    console.log('Object identified by Id', objectPassedById)
+const updateArrayFunc = (obj, id) => {
+
+    let newDataArray = []
+    let objectPassedById = data.find(ele => ele.id === id)
     objectPassedById = obj
-    console.log('Modified Object', objectPassedById)
-    // console.log('Object passad by Id:', object_passed_by_id)
+    // console.log('Updated object:', objectPassedById)
+    // newDataArray = data.map((ele) => ({...ele, name: ele.id === id && objectPassedById['name']? objectPassedById['name']: ele.name,  price: ele.id === id && objectPassedById['price']? objectPassedById['price'] : ele.price, featured: ele.id === id && objectPassedById['featured']? objectPassedById['featured'] : ele.featured, discount: ele.id=== id && objectPassedById['discount']? objectPassedById['discount'] : ele.discount }))
+    newDataArray = data.map(ele => {
+        if(ele.id === id) {
+            return {...ele, ...objectPassedById}
+            // return {...objectPassedById, name : objectPassedById.name? objectPassedById.name: ele.name, price: objectPassedById.price? objectPassedById.price: ele.price, featured: objectPassedById.featured? objectPassedById.featured : ele.featured, discount: objectPassedById.discount? objectPassedById.discount : ele.discount }
+        } else {
+            return ele
+        }
+    })
+    console.log('Updated array data:', newDataArray)
 }
 
-updateArrayFunc({ name: 'sprite', price: 50 }, 4)
-console.log(updateArrayFunc)
+updateArrayFunc({ name: 'sprite', price: 80, discount: 30 }, 4)
+// console.log(updateArrayFunc)
 
 
 // const updateFun = (obj, id) => data.filter(ele => console.log(obj))
