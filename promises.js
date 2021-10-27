@@ -1,12 +1,46 @@
-const axios = require("axios")
+const axios = require("axios");
 
-const url1 = axios('https://jsonplaceholder.typicode.com/todos/')
-console.log(url1)
-const url2 = axios('https://jsonplaceholder.typicode.com/users')
+let URLs = ["https://jsonplaceholder.typicode.com/todos/", "https://jsonplaceholder.typicode.com/users"];
 
-Promise.all([url1,url2]).then(responce => 
-    console.log(responce)    
-)
+function getAllData(URLs) {
+    return Promise.all(URLs.map(fetchData));
+}
+
+function fetchData(URL) {
+    return axios
+        .get(URL)
+        .then(function (response) {
+            return {
+                success: true,
+                data: response.data
+            };
+        })
+        .catch(function (error) {
+            return { success: false };
+        });
+}
+
+getAllData(URLs)
+    .then((resp) => {
+        console.log(resp);
+    })
+    .catch((e) => {
+        console.log(e);
+    });
+// function fetchData(URL) {
+//     return axios
+//         .get(URL)
+//         .then(response => {
+//             return {
+//                 success: true,
+//                 data: response.data
+//             };
+//         })
+//         .catch(error => {
+//             return { success: false };
+//         });
+// }
+
 // .then(responce => {
 //     const res = responce.data.slice(0, 5)
 //     console.log("Responce from api:", res)
@@ -108,7 +142,7 @@ Promise.all([url1,url2]).then(responce =>
 //     }).catch(error => {
 //         console.log('Responce of Error:',error)
 //     })
-    
+
 // }
 // ExecuteFunction()
 
